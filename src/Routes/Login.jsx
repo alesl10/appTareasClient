@@ -16,7 +16,7 @@ const {userLogin} = UseAuth()
   } = useForm();
 
   const onSubmit = handleSubmit(async (values) => {
-    console.log(values)
+    // console.log(values)
     userLogin(values);
   });
 
@@ -51,7 +51,7 @@ const {userLogin} = UseAuth()
             <input
               placeholder="Contraseña"
               type={showPassword ? "text" : "password"} // Alterna entre 'text' y 'password'
-              {...register("password", {
+              {...register("contraseña", {
                 required: "La contraseña es requerida",
               })}
               className="w-full py-2 px-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

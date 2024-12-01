@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 const index = () => {
   return (
-    <div>
+    <div className="grow ">
       <Outlet />
     </div>
   );

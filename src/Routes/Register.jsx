@@ -6,23 +6,23 @@ import { UseAuth } from "../Context/AuthContext.jsx";
 const Registrar = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { userLogin, agregarUsuario } = UseAuth();
-  
+
   const {
     register,
     handleSubmit,
     setError,
-    reset, 
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = handleSubmit(async (values) => {
-    if (values.password !== values.passwordConfirm) {
-      setError('passwordConfirm', { message: "La contraseña no coincide" });
-      return; 
+    if (values.contraseña !== values.contraseñaConfirm) {
+      setError('contraseñaConfirm', { message: "La contraseña no coincide" });
+      return;
     }
-    
-    agregarUsuario(values);
-    
+
+    const rsp = await agregarUsuario(values);
+    console.log(rsp);
     reset();
   });
 
@@ -78,7 +78,7 @@ const Registrar = () => {
             <input
               placeholder="Contraseña"
               type="password"
-              {...register("password", { required: "La contraseña es requerida" })}
+              {...register("contraseña", { required: "La contraseña es requerida" })}
               className="w-full py-2 px-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
@@ -87,7 +87,7 @@ const Registrar = () => {
             <input
               placeholder="Confirmar Contraseña"
               type="password"
-              {...register("passwordConfirm", { required: "La contraseña es requerida" })}
+              {...register("contraseñaConfirm", { required: "La contraseña es requerida" })}
               className="w-full py-2 px-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.passwordConfirm && <p className="text-red-500 text-sm mt-1">{errors.passwordConfirm.message}</p>}

@@ -6,6 +6,7 @@ export const addUsuario = async (usuario) => {
     return response;
   } catch (error) {
     console.log(error);
+    return { success: false, message: error };
   }
 };
 
@@ -15,5 +16,6 @@ export const login = async (usuario) => {
     return response;
   } catch (error) {
     console.log(error);
+    return { success: false, message: error };
   }
 };
