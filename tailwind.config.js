@@ -8,7 +8,17 @@ export default {
     flowbite.content(),
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        primary:"#FA812F",
+        secondary:"#FEF3E2",
+        text:"#FAB12F",
+        textDark:"#FA4032"
+      },
+      fontFamily:{
+        HachiMaruPopfamily:['Hachi Maru Pop','sans-serif']
+      }
+    },
   },
   plugins: [
     flowbite.plugin(),

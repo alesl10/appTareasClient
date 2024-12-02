@@ -1,17 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./Components/layouts";
 import { AuthProvider } from "./Context/AuthContext.jsx";
+import Header from "./Components/Header.jsx";
+import Footer from "./Components/Footer.jsx";
 //Routes
 import Login from "./Routes/Login.jsx";
 import Registrar from "./Routes/Register.jsx";
 import Home from "./Routes/Home.jsx";
-import Header from "./Components/Header.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <main className="flex flex-col justify-between h-svh">
+        <main className="flex flex-col justify-between h-svh font-HachiMaruPopfamily">
           <Header />
           <Routes>
             <Route element={<Layout />}>
@@ -20,6 +21,7 @@ function App() {
               <Route path="/Home" element={<Home />} />
             </Route>
           </Routes>
+          <Footer/>
         </main>
       </AuthProvider>
     </BrowserRouter>
