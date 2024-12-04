@@ -13,12 +13,14 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <main className="flex flex-col justify-between h-svh font-HachiMaruPopfamily">
+          <img src="/fondo.png" alt="fondo" className=" absolute -z-20" />
           <Header />
           <Routes>
             <Route element={<Layout />}>
               <Route path="/" element={<Login />} />
               <Route path="/register" element={<Registrar />} />
               <Route path="/Home" element={<Home />} />
+              <Route path="/Home/:estado" element={<Home />} />
             </Route>
           </Routes>
           <Footer/>

@@ -4,8 +4,10 @@ import { UseAuth } from "../Context/AuthContext";
 const Header = () => {
   const { user } = UseAuth();
 
+
+
   return (
-    <Navbar className=" bg-primary/70 text-secondary" fluid rounded>
+    <Navbar className=" bg-primary/90 text-secondary" fluid rounded>
       <Navbar.Brand href="https://flowbite-react.com">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           Tareas App
@@ -19,8 +21,8 @@ const Header = () => {
             inline
             label={
               <Avatar
-                alt="User settings"
-                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                alt="foto perfil"
+                img="/fotoPerfil.jpg"
                 rounded
               />
             }
@@ -45,12 +47,11 @@ const Header = () => {
         ""
       )}
       <Navbar.Collapse >
-        <Navbar.Link className=" font-semibold" href="#" active>
+        <Navbar.Link className=" font-semibold" href="/home" active>
           Home
         </Navbar.Link>
-        <Navbar.Link className=" font-semibold" href="#">Pendientes</Navbar.Link>
-        <Navbar.Link className=" font-semibold" href="#">Finalizadas</Navbar.Link>
-        <Navbar.Link className=" font-semibold" href="#">Desistidas</Navbar.Link>
+        <Navbar.Link className=" font-semibold" href="/home/pendiente">Pendientes</Navbar.Link>
+        <Navbar.Link className=" font-semibold" href="/home/finalizada">Finalizadas</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
   );

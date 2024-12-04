@@ -1,6 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { login, addUsuario } from "../api/usuario.js";
-import { getTareasByUser, addTarea, deleteTarea } from '../api/tareas.js'
+import {
+  getTareasByUser,
+  addTarea,
+  deleteTarea,
+  updateTarea,
+} from "../api/tareas.js";
 import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
@@ -13,10 +18,10 @@ export const UseAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [tareas, setTareas] = useState([])
-  const navigate = useNavigate()
-
+  const [user, setUser] = useState(null);
+  const [tareas, setTareas] = useState([]);
+  const navigate = useNavigate();
+  const [filter, setFilter] = useState("pendiente")
 
   useEffect(() => {
     //logica para saber si esta logueado
@@ -26,14 +31,16 @@ export const AuthProvider = ({ children }) => {
 
   // chequeo si esta logueado
   const checkLogin = async () => {
-    const sesion = sessionStorage.getItem('usuario')
+    const sesion = sessionStorage.getItem("usuario");
     if (sesion) {
-      const usuario = JSON.parse(sesion)
-      setUser(usuario)
-      getTareas(usuario.id)
-      navigate('/home')
+      const usuario = JSON.parse(sesion);
+      setUser(usuario);
+      getTareas(usuario.id);
+      if (location.pathname === "/" || location.pathname === "/login") {
+        navigate("/home");
+      }
     }
-  }
+  };
 
   //logueo usuario
   const userLogin = async (usuario) => {
@@ -42,9 +49,9 @@ export const AuthProvider = ({ children }) => {
       // console.log(rsp);
       if (rsp.data) {
         const userDB = rsp.data.data;
-        setUser(userDB)
+        setUser(userDB);
         // console.log(userDB)
-        sessionStorage.setItem('usuario', JSON.stringify(userDB))
+        sessionStorage.setItem("usuario", JSON.stringify(userDB));
       }
     } catch (error) {
       console.error("Error al loguear usuario:", error);
@@ -68,46 +75,62 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await getTareasByUser(userId);
       // console.log(response)
-      setTareas(response.data)
+      setTareas(response.data);
       return response;
     } catch (error) {
       console.error("Error al obtener tareas:", error);
       return { success: false, message: "Error al obtener tareas" };
     }
-  }
+  };
 
   // Agregar Tarea
   const agregarTarea = async (tarea) => {
     try {
       const response = await addTarea(tarea);
       if (response.data.data != null) {
-        await getTareas(tarea.usuario_id)
+        await getTareas(tarea.usuario_id);
       }
     } catch (error) {
       console.error("Error al crear tarea", error);
       return { success: false, message: "Error al crear tarea" };
     }
-  }
+  };
 
   const eliminarTarea = async (idTarea) => {
     try {
-      const response = await deleteTarea(idTarea)
-      await getTareas(user.id)
+      const response = await deleteTarea(idTarea);
+      await getTareas(user.id);
     } catch (error) {
       console.error("Error al eliminar tarea", error);
       return { success: false, message: "Error al eliminar tarea" };
     }
-  }
+  };
+
+  const tareaUpdate = async (estado, id) => {
+    try {
+      const response = await updateTarea(estado, id);
+      await getTareas(user.id);
+    } catch (error) {
+      console.error("Error al actualizar tarea", error);
+      return { success: false, message: "Error al actualizar tarea" };
+    }
+  };
+
+ 
 
   return (
-    <AuthContext.Provider value={{
-      userLogin,
-      agregarUsuario,
-      agregarTarea,
-      tareas,
-      user,
-      eliminarTarea
-    }}>
+    <AuthContext.Provider
+      value={{
+        userLogin,
+        agregarUsuario,
+        agregarTarea,
+        tareas,
+        user,
+        eliminarTarea,
+        tareaUpdate,
+        
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
